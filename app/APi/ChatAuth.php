@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Controller;
+namespace App\Api;
 
 use App\Ext\Timer;
+use App\Model\UserToken;
 use Sapi\Api;
 use Sapi\HttpCode;
 
@@ -73,6 +74,8 @@ class ChatAuth extends Api
         ], [
             "id" => $uid
         ]);
+
+        (new UserToken($uid))->save($token, $uid);
 
         return [
             "code" => HttpCode::$StatusOK,

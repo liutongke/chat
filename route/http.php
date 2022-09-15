@@ -14,6 +14,10 @@ return [
     \HttpRouter("/mysql/save", "App\Controller\MysqlDemo@save"),
     \HttpRouter("/mysql/del", "App\Controller\MysqlDemo@del"),
     \HttpRouter("/mysql/update", "App\Controller\MysqlDemo@update"),
-    \HttpRouter("/chat/login", "App\Controller\ChatAuth@login"),
-    \HttpRouter("/chat/register", "App\Controller\ChatAuth@register"),
+
+
+    \HttpRouter("/chat/login", "App\Api\ChatAuth@login"),
+    \HttpRouter("/chat/register", "App\Api\ChatAuth@register"),
+    \HttpRouter("/chat/chatFriend/search", "App\Api\ChatFriend@searchUser"),
+    \HttpRouter("/chat/chatFriend/newFriend", "App\Api\ChatFriend@newFriend"),
 ];

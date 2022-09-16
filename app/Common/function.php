@@ -5,9 +5,10 @@ function DI()
     return \Sapi\Di::one();
 }
 
-function getLocalIp(): array
+function getLocalIp(): string
 {
-    return swoole_get_local_ip();
+    $localIpList = swoole_get_local_ip();
+    return $localIpList['eth0'];
 }
 
 function getSalt(): string

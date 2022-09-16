@@ -29,8 +29,6 @@ class ChatAuth extends Api
     {
         $uid = $request->post['uid'];
         $password = $request->post['password'];
-        $localIp = getLocalIp();
-
 
         $database = new \Simps\DB\BaseModel();
         $res = $database->select("user_info", [
@@ -60,14 +58,6 @@ class ChatAuth extends Api
         }
         $token = md5($uid . Timer::now() . getSalt());
 
-        $redis = new \Simps\DB\BaseRedis();
-
-        $pipe = $redis->multi(\Redis::PIPELINE);
-        $pipe->set($token, $uid);
-        $pipe->hmset($uid, $localIp);
-        $pipe->expire($token, 86400);
-        $pipe->expire($uid, 86400);
-        $replies = $pipe->exec();
 
         $database->update("user_info", [
             "login_tm" => Timer::now(),
@@ -75,6 +65,7 @@ class ChatAuth extends Api
             "id" => $uid
         ]);
 
+        $localIp = getLocalIp();
         (new UserToken($uid))->save($token, $uid);
 
         return [

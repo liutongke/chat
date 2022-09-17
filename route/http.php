@@ -1,7 +1,7 @@
 <?php
 
 return [
-    \HttpRouter("/", "App\Controller\App@Index"),
+    \HttpRouter("/", "App\Api\App@Index"),
     \HttpRouter("/login", "App\Controller\Auth@login"),
     \HttpRouter("/logs", "App\Controller\Logs@index"),
     \HttpRouter("/demo", "App\Controller\Demo@demo"),
@@ -19,5 +19,8 @@ return [
     \HttpRouter("/chat/login", "App\Api\ChatAuth@login"),
     \HttpRouter("/chat/register", "App\Api\ChatAuth@register"),
     \HttpRouter("/chat/chatFriend/search", "App\Api\ChatFriend@searchUser"),
-    \HttpRouter("/chat/chatFriend/newFriend", "App\Api\ChatFriend@newFriend"),
+    \HttpRouter("/chat/chatFriend/apply", "App\Api\ChatFriend@apply"),
+    \HttpRouter("/chat/chatFriend/applyList", "App\Api\ChatFriend@applyList"),
+    \HttpRouter("/chat/chatFriend/agreeApply", "App\Api\ChatFriend@agreeApply"),
+    \HttpRouter("/chat/chatFriend/friendList", "App\Api\ChatFriend@friendList"),
 ];

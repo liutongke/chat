@@ -10,10 +10,13 @@ class ChatFriend extends BaseApi
             'searchUser' => [
                 'uid' => ['name' => 'uid', 'require' => true],
             ],
-            'register' => [
-                'nick' => ['name' => 'nick', 'require' => true],
-                'head' => ['name' => 'head', 'require' => true],
-                'password' => ['name' => 'password', 'require' => true],
+            'apply' => [
+                'uid' => ['name' => 'uid', 'require' => true],
+                'remark' => ['name' => 'remark', 'require' => true],
+            ],
+            'agreeApply' => [
+                'id' => ['name' => 'id', 'require' => true],
+                'type' => ['name' => 'type', 'require' => true],
             ]
         ];
     }
@@ -25,46 +28,39 @@ class ChatFriend extends BaseApi
         return (new \App\Controller\ChatFriend($this->uid))->searchUser($searchUid);
     }
 
-    //申请列表
-    public function newFriend(\Swoole\WebSocket\Server $server, array $msg): array
+    //申请好友
+    public function apply(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
     {
-        return [
-            'err' => 200,
-            'data' => [
-                'name' => 'api-swoole',
-                'version' => '1.0.0',
-            ]
-        ];
+        $applyUid = $request->post['uid'];
+        $remark = $request->post['remark'];
+        return (new \App\Controller\ChatFriend($this->uid))->apply($applyUid, $remark);
+    }
+
+    //申请列表
+    public function applyList(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
+    {
+        return (new \App\Controller\ChatFriend($this->uid))->applyList();
+    }
+
+    //    添加好友
+    public function agreeApply(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
+    {
+        $applyId = $request->post['id'];
+        $type = $request->post['type'];//0-等待确认 1-同意 2-拒绝 4-拉黑
+        return (new \App\Controller\ChatFriend($this->uid))->applyHandler($applyId, $type);
+//        [
+//            'add_time' => '添加时间',
+//            'uid' => '好友id',
+//            'remark' => '备注',
+//            ''
+//        ];
+
     }
 
     //好友列表
-    public function list(\Swoole\WebSocket\Server $server, array $msg): array
+    public function friendList(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
     {
-        return [
-            'err' => 200,
-            'data' => [
-                'name' => 'api-swoole',
-                'version' => '1.0.0',
-            ]
-        ];
-    }
-
-//    添加好友
-    public function add(\Swoole\WebSocket\Server $server, array $msg): array
-    {
-        [
-            'add_time' => '添加时间',
-            'uid' => '好友id',
-            'remark' => '备注',
-            ''
-        ];
-        return [
-            'err' => 200,
-            'data' => [
-                'name' => 'api-swoole',
-                'version' => '1.0.0',
-            ]
-        ];
+        return (new \App\Controller\ChatFriend($this->uid))->friendList();
     }
 
 //    删除好友

@@ -27,7 +27,7 @@ class UserToken
     }
 
     //设置uid所在ip
-    public function bindIpFd(int $uid, string $localIp = '', string $fd): bool
+    public function bindIpFd(int $uid, string $fd, string $localIp = ''): bool
     {
         if (empty($localIp)) {
             $localIp = getLocalIp();

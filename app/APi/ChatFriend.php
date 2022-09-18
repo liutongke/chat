@@ -17,6 +17,13 @@ class ChatFriend extends BaseApi
             'agreeApply' => [
                 'id' => ['name' => 'id', 'require' => true],
                 'type' => ['name' => 'type', 'require' => true],
+            ],
+            'remark' => [
+                'uid' => ['name' => 'uid', 'require' => true],
+                'remark' => ['name' => 'remark', 'require' => true],
+            ],
+            'del' => [
+                'uid' => ['name' => 'uid', 'require' => true],
             ]
         ];
     }
@@ -63,27 +70,19 @@ class ChatFriend extends BaseApi
         return (new \App\Controller\ChatFriend($this->uid))->friendList();
     }
 
-//    删除好友
-    public function del(\Swoole\WebSocket\Server $server, array $msg): array
+    //    备注好友
+    public function remark(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
     {
-        return [
-            'err' => 200,
-            'data' => [
-                'name' => 'api-swoole',
-                'version' => '1.0.0',
-            ]
-        ];
+        $uid = $request->post['uid'];
+        $remark = $request->post['remark'];
+
+        return (new \App\Controller\ChatFriend($this->uid))->remark($uid, $remark);
     }
 
-//    备注好友
-    public function remark(\Swoole\WebSocket\Server $server, array $msg): array
+//    删除好友
+    public function del(\Swoole\Http\Request $request, \Swoole\Http\Response $response): array
     {
-        return [
-            'err' => 200,
-            'data' => [
-                'name' => 'api-swoole',
-                'version' => '1.0.0',
-            ]
-        ];
+        $uid = $request->post['uid'];
+        return (new \App\Controller\ChatFriend($this->uid))->del($uid);
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Ext\Timer;
+use App\Model\ApplyFriend;
 use App\Model\Friend;
 use App\Model\User;
 use Sapi\HttpCode;
@@ -71,21 +72,31 @@ class ChatFriend
     }
 
     //同意添加好友
+    //0-等待确认 1-同意 2-拒绝 4-拉黑
     public function applyHandler($applyId, $type): array
     {
-        $database = new \Simps\DB\BaseModel();
-        $list = $database->select('apply_friend', [
-            'uid',
-            'friend_uid',
-        ], [
-            'id' => $applyId,
-            'LIMIT' => 1
-        ]);
 
-        $this->insterFriend(1, 2);
+        $friendModel = new Friend($this->uid);
+        if ($friendModel->isMax()) {
+            return [
+                'err' => 400,
+                'data' => ['好友数量限制']
+            ];
+        }
+
+        $ApplyFriendModel = new ApplyFriend($this->uid);
+        $applyFriendInfo = $ApplyFriendModel->get($applyId);
+
+        if (!empty($applyFriendInfo) && $type == 1) {//同意好友
+            $friend_uid = $applyFriendInfo['friend_uid'];
+            $friendModel->add($this->uid, $friend_uid, $applyId, $type);
+        } else if (!empty($applyFriendInfo) && $type != 1) {//其它处理
+            $ApplyFriendModel->update($applyId, $type);
+        }
+
         return [
             'err' => 200,
-            'data' => $list
+            'data' => $applyFriendInfo
         ];
     }
 
@@ -101,29 +112,27 @@ class ChatFriend
         ];
     }
 
-    private function insterFriend($uid, $friend_uid)
+    public function remark($friend_id, $remark): array
     {
-        $tm = Timer::now();
-        $database = new \Simps\DB\BaseModel();
+        $friendModel = new Friend($this->uid);
+        $res = $friendModel->remark($friend_id, $remark);
+        return [
+            'err' => 200,
+            'data' => [
+                'res' => $res
+            ]
+        ];
+    }
 
-        $database->beginTransaction();
-
-        try {
-            $database->insert('friend', [
-                'uid' => $uid,
-                'friend_uid' => $friend_uid,
-                'agree_time' => $tm,
-            ]);
-
-            $database->insert('friend', [
-                'uid' => $friend_uid,
-                'friend_uid' => $uid,
-                'agree_time' => $tm,
-            ]);
-            $database->commit();
-        } catch (\Exception $e) {
-            $database->rollBack();
-        }
-
+    public function del(int $friend_id): array
+    {
+        $friendModel = new Friend($this->uid);
+        $res = $friendModel->del($friend_id);
+        return [
+            'err' => 200,
+            'data' => [
+                'res' => $res
+            ]
+        ];
     }
 }

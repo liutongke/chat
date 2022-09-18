@@ -14,8 +14,9 @@
   "require": {
     "php": ">=7.4",
     "ext-swoole": ">=4.5",
-    "api-swoole/sapi": "dev-master",
-    "simple-swoole/db": "^1.0"
+    "api-swoole/sapi": "dev-dev",
+    "simple-swoole/db": "^1.0",
+    "spatie/crypto": "^2.0"
   },
   "autoload": {
     "psr-4": {
@@ -25,11 +26,5 @@
       "app/Common/function.php"
     ]
   },
-  "minimum-stability": "stable",
-  "repositories": [
-    {
-      "type": "path",
-      "url": "/var/www/apiswoole-core"
-    }
-  ]
+  "minimum-stability": "stable"
 }

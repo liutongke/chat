@@ -12,6 +12,6 @@ class TcpServe
     {
         $chatModel = new Chat();
         $msg = json_decode($data, true);
-        $chatModel->sendMsg($server, $msg['uid'], $msg);
+        $chatModel->sendMsg($server, $msg['uid'], $msg, 1);
     }
 }

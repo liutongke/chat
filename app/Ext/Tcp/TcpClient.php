@@ -36,5 +36,6 @@ class TcpClient
             $client = $this->client($serverIp);
             return $client->send(json_encode($sendMsg));
         }
+        return false;
     }
 }

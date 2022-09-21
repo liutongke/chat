@@ -12,6 +12,9 @@ class BaseApi extends Api
     //用户权限验证
     public function userCheck($request): string
     {
+        if (!isset($request->header['x-token'])) {
+            return 'empty_token';
+        }
         $token = $request->header['x-token'];
         $account = (new UserToken())->get($token);
         if (empty($account)) {

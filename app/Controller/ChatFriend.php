@@ -127,7 +127,7 @@ class ChatFriend
     public function del(int $friend_id): array
     {
         $friendModel = new Friend($this->uid);
-        $res = $friendModel->del($friend_id);
+        $res = $friendModel->del($this->uid, $friend_id);
         return [
             'err' => 200,
             'data' => [

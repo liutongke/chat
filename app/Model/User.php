@@ -22,19 +22,19 @@ class User
 
         if (!$user) {
             $database = new \Simps\DB\BaseModel();
-            $res = $database->select('user_info', [
+            $userInfo = $database->get('user_info', [
                 'id(uid)',
                 'nick',
                 'head',
             ], [
                 'id' => $uid
             ]);
-            if (!$res) {
+            if (!$userInfo) {
                 return [];
             }
-            $redis->set($key, json_encode($res['0']));
+            $redis->set($key, json_encode($userInfo));
             $redis->expire($key, self::$ttl);
-            return $res['0'];
+            return $userInfo;
         }
         return json_decode($user, true);
     }

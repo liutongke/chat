@@ -1,0 +1,3 @@
+.\ab.exe -c 10 -n 10000 -H "x-token:62ebb065c3d77b06f300469843f01601" http://192.168.0.105:9500/chat/chatFriend/friendList
+
+docker run -i -t -p 9500:9500 -p 9501:9501 -p 9502:9502/udp --name swoole-1 -v C:\Users\keke\dev\docker\lnmp:/var/www a343f57d0d80

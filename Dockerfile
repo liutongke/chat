@@ -16,10 +16,10 @@ RUN apt-get update \
     && php composer-setup.php \
     && php -r "unlink('composer-setup.php');"
 
-COPY / /var/www
+#COPY / /var/www
 
 WORKDIR /var/www
 
-CMD ["php","./apiswoole.php"]
+#CMD ["php","./apiswoole.php"]
 
 #docker build -t apiswoole:v1 ./

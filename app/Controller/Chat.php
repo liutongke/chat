@@ -1,8 +1,6 @@
 <?php
 
-namespace App\APi;
-
-use App\Controller\ChatController;
+namespace App\Controller;
 
 class Chat
 {

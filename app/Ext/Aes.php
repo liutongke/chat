@@ -25,10 +25,9 @@ class Aes
      * @param $key
      * @return false|string
      */
-    public function aesDecrypt($content, $key, $iv = 'ZZWBKJ_ZHIHUAWEI'): string
+    public function aesDecrypt($content, $key, $iv = 'APISWOOLE_CHAT__'): string
     {
-        var_dump($content, $key);
-        return openssl_decrypt(base64_decode($content), 'AES-256-CBC', $key, OPENSSL_ZERO_PADDING, $iv);
+        return openssl_decrypt(base64_decode($content), 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv);
     }
 
     /**
@@ -37,7 +36,7 @@ class Aes
      * @param $key
      * @return false|string
      */
-    public function aesEncrypt($content, $key, $iv = 'ZZWBKJ_ZHIHUAWEI'): string
+    public function aesEncrypt($content, $key, $iv = 'APISWOOLE_CHAT__'): string
     {
         return base64_encode(openssl_encrypt($content, 'AES-256-CBC', $key, OPENSSL_RAW_DATA, $iv));
     }

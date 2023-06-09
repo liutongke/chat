@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api;
+namespace App\Controller;
 
 use App\Ext\Timer;
 use App\Model\UserToken;

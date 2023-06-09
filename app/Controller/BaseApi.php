@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api;
+namespace App\Controller;
 
 use App\Model\UserToken;
 use Sapi\Api;

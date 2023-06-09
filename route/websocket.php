@@ -3,6 +3,6 @@
 return [
     WsRouter("/", "\App\Controller\Websocket@index"),
     WsRouter("/login", "\App\Controller\Websocket@login"),
-    WsRouter("/sendMsgToUser", "\App\APi\Chat@sendMsgToUser"),
-    WsRouter("/msgReport", "\App\APi\Chat@msgReport"),
+    WsRouter("/sendMsgToUser", "\App\Controller\Chat@sendMsgToUser"),
+    WsRouter("/msgReport", "\App\Controller\Chat@msgReport"),
 ];

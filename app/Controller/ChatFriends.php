@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Api;
+namespace App\Controller;
 
-class ChatFriend extends BaseApi
+class ChatFriends extends BaseApi
 {
     public function rule()
     {
